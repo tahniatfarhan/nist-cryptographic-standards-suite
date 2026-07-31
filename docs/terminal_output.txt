@@ -1,0 +1,90 @@
+======================================================================
+ IMPLEMENTATION OF NIST SECURITY STANDARDS
+ Student: Tahniat Farhan | Reg No: 2025(S)-CYS-15 | UET Lahore
+======================================================================
+
+======================================================================
+1. DIFFIE-HELLMAN KEY EXCHANGE (NIST SP 800-56A)
+======================================================================
+  -> Generated 2048-bit DH domain parameters
+  -> Alice and Bob each generated a private/public key pair
+  Alice derived key (hex): 52968856c2db2a9bfe5cdcfe80b38670...
+  Bob   derived key (hex): 52968856c2db2a9bfe5cdcfe80b38670...
+  Keys match: True
+  RESULT: PASS - Shared secret established securely
+
+======================================================================
+2. RSA-2048 KEY PAIR GENERATION (NIST FIPS 186-4)
+======================================================================
+  -> RSA-2048 key pair generated
+  -> Saved keys/rsa_private.pem and keys/rsa_public.pem
+  RESULT: PASS
+
+======================================================================
+3. DIGITAL SIGNATURE - RSA-PSS / SHA-256 (FIPS 186-4)
+======================================================================
+  Message   : Implementation of NIST Security Standards - Tahniat Farhan
+  Signature : MMBmWuqfd96PoYKoL2hGM/6P5UoerJgXTrZxn6pg2/xsOdsOx9vnS7g5o2A/...
+  Signature verification (unmodified message): True
+  Tampered message correctly rejected: True
+  RESULT: PASS
+
+======================================================================
+4. DIGITAL CERTIFICATE - X.509 SELF-SIGNED (PKI)
+======================================================================
+  -> Self-signed X.509 certificate created and saved to certs/certificate.pem
+  Subject      : CN=Tahniat Farhan,O=UET Lahore - Cyber Security Dept,L=Lahore,ST=Punjab,C=PK
+  Serial Number: 526935898382277772000134303887421558162431934669
+  Valid From   : 2026-07-11 14:13:30+00:00
+  Valid Until  : 2027-07-11 14:13:30+00:00
+  Certificate signature valid: True
+  RESULT: PASS
+
+======================================================================
+5. AES-256-GCM SYMMETRIC ENCRYPTION (NIST FIPS 197)
+======================================================================
+  Plaintext  : Confidential Cryptography Lab Report - UET Lahore
+  Ciphertext : 66af72a8caaf2d9ec4b720ff80f769704bb62232220e55e9b7...
+  Auth Tag   : 3f0078121301c4beef363b7285d50300
+  Decrypted  : Confidential Cryptography Lab Report - UET Lahore
+  RESULT: PASS
+
+======================================================================
+6. TRIPLE DES (3DES) ENCRYPTION (NIST SP 800-67, legacy)
+======================================================================
+  Plaintext  : Legacy symmetric cipher demo
+  Ciphertext : 8046b8142f83a88b12a1af1c5b1f48f5088bdbc96a3ba1a0d266cb9a4c0cd965
+  Decrypted  : Legacy symmetric cipher demo
+  Note: 3DES is deprecated by NIST (disallowed after 2023) and
+        is included here only for syllabus/legacy comparison.
+  RESULT: PASS
+
+======================================================================
+7. HYBRID ENCRYPTION - RSA-OAEP WRAPS AES KEY (Basis of TLS)
+======================================================================
+  RSA-encrypted AES key: 43a6a9c009c303f5ad404021fe1284eb9ff29fa5f4ed482159...
+  Recovered AES key matches original: True
+  RESULT: PASS
+
+======================================================================
+8. ONE-TIME PAD (OTP) ENCRYPTION
+======================================================================
+  Original  : OTP_IS_UNBREAKABLE
+  Key (hex) : 88d68aa70a3576cdaca79122b8dd59ce215a
+  Cipher    : c782daf843662998e2e5c367f996188c6d1f
+  Decrypted : OTP_IS_UNBREAKABLE
+  RESULT: PASS
+
+======================================================================
+SUMMARY OF RESULTS
+======================================================================
+  [PASS] Diffie-Hellman
+  [PASS] Digital Signature
+  [PASS] Digital Certificate
+  [PASS] AES-256-GCM
+  [PASS] 3DES
+  [PASS] Hybrid RSA+AES
+  [PASS] One-Time Pad
+======================================================================
+ ALL NIST SECURITY STANDARDS IMPLEMENTED SUCCESSFULLY!
+======================================================================
