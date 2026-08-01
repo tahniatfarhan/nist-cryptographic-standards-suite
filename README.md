@@ -1,115 +1,141 @@
-# NIST Cryptographic Standards Suite (Python Cryptography)
+# NIST Cryptographic Standards Suite (Python)
 
-## Professional Overview
-The **NIST Cryptographic Standards Suite** is a comprehensive Python implementation of National Institute of Standards and Technology (NIST) and Federal Information Processing Standards (FIPS) security mechanisms. Built for the *Cryptography / Introduction to Cyber Security* courses at UET Lahore, this project implements modern symmetric encryption, asymmetric key generation, digital signatures, PKI X.509 certificate creation, and hybrid cryptosystems using production-grade cryptographic libraries.
+[![Python CI Suite](https://github.com/tahniatfarhan/nist-cryptographic-standards-suite/actions/workflows/ci.yml/badge.svg)](https://github.com/tahniatfarhan/nist-cryptographic-standards-suite/actions/workflows/ci.yml)
+[![CodeQL Analysis](https://github.com/tahniatfarhan/nist-cryptographic-standards-suite/actions/workflows/codeql.yml/badge.svg)](https://github.com/tahniatfarhan/nist-cryptographic-standards-suite/actions/workflows/codeql.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![NIST FIPS Compliant](https://img.shields.io/badge/NIST-FIPS_186--4_|_197-green.svg)](https://csrc.nist.gov/)
 
-## Objectives
-- Programmatically implement standards specified by NIST SP 800-56A, FIPS 186-4, FIPS 197, and RFC 5280.
-- Master practical application of public-key infrastructure (PKI), digital signatures, and authenticated cipher modes.
-- Build clean, executable Python cryptosystems generating valid key containers, certificates, and signatures.
+> 🎓 **Academic Project Disclaimer:** This repository is an **educational laboratory demonstration suite** developed for the Cryptography / Cyber Security course in the BS Cyber Security degree program at UET Lahore. It demonstrates core cryptographic algorithms, key exchange, digital signatures, PKI, and symmetric/asymmetric ciphers using PyCA `cryptography`.
 
-## Features
-1. **Diffie-Hellman Key Exchange (NIST SP 800-56A)**: Secure shared secret derivation over insecure channels using HKDF key derivation.
-2. **RSA Key Pair Generation (NIST SP 800-56B / FIPS 186-4)**: 2048-bit RSA public/private key pair generation and PEM serialization.
-3. **Digital Signature (RSA-PSS & SHA-256 / FIPS 186-4)**: Message signing and verification using Probabilistic Signature Scheme (PSS).
-4. **Digital Certificates (X.509 / RFC 5280)**: Self-signed X.509 v3 certificate authority (CA) and server certificate generation.
-5. **AES-256-GCM Encryption (FIPS 197 / SP 800-38D)**: Authenticated symmetric cipher providing confidentiality and payload integrity verification.
-6. **Triple DES (3DES) (NIST SP 800-67)**: Legacy symmetric cipher demonstration for historical syllabus completeness.
-7. **Hybrid Encryption (RSA-OAEP + AES-256-GCM)**: Real-world TLS/HTTPS foundation encrypting symmetric payload keys with RSA public keys.
-8. **One-Time Pad (OTP)**: Information-theoretic security demonstration using bitwise XOR key streams.
+---
 
-## Technologies Used
-- **Primary Language**: Python 3.x
-- **Cryptographic Libraries**: `cryptography` (hazmat layer), `PyCryptodome`
-- **Standards & Protocols**: NIST SP 800-56A/B, FIPS 186-4, FIPS 197, RFC 5280, X.509, AES-GCM, RSA-PSS, Diffie-Hellman
+## 📐 Cryptographic System Architecture
 
-## Architecture Overview
-The codebase (`src/app.py`) is structured into independent modular cryptographic handlers:
-`Cryptographic Standard Handler` ➔ `Key Material Generation` ➔ `Cipher / Signature Operation` ➔ `Container Serialization (.pem, .crt, .bin)`
+### 1. Hybrid Encryption Flow (RSA-OAEP + AES-256-GCM)
+The hybrid encryption pipeline demonstrates how modern security protocols (such as TLS/HTTPS and PGP) securely transport confidential data:
 
-## Folder Structure
-```text
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Sender
+    participant Receiver
+    Sender->>Sender: Generate Ephemeral 256-bit AES Key & 96-bit Nonce
+    Sender->>Sender: Encrypt Plaintext with AES-256-GCM (Authentic Ciphertext + Tag)
+    Sender->>Receiver: Encrypt Ephemeral AES Key using Receiver's RSA-2048 Public Key (RSA-OAEP)
+    Receiver->>Receiver: Decrypt Ephemeral AES Key using Receiver's RSA Private Key
+    Receiver->>Receiver: Decrypt Ciphertext & Verify GCM Authentication Tag
+```
+
+### 2. Diffie-Hellman Key Exchange (NIST SP 800-56A)
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Alice
+    participant Bob
+    Alice->>Bob: Share 2048-bit DH Domain Parameters (Generator g, Prime p)
+    Alice->>Bob: Alice Sends Public Key (A = g^a mod p)
+    Bob->>Alice: Bob Sends Public Key (B = g^b mod p)
+    Alice->>Alice: Compute Shared Secret (K = B^a mod p) ➔ HKDF-SHA256 ➔ Symmetric Key
+    Bob->>Bob: Compute Shared Secret (K = A^b mod p) ➔ HKDF-SHA256 ➔ Symmetric Key
+```
+
+---
+
+## 📜 Supported NIST & FIPS Standards
+
+| Module | Primitive / Algorithm | Standard Reference | Security Status |
+|---|---|---|---|
+| **Diffie-Hellman** | DH 2048-bit MODP + HKDF | NIST SP 800-56A / RFC 5869 | ✅ Approved |
+| **RSA Key Generation** | RSA-2048 Key Pair | NIST SP 800-56B / FIPS 186-4 | ✅ Approved |
+| **Digital Signature** | RSA-PSS with SHA-256 | FIPS 186-4 | ✅ Approved |
+| **Digital Certificate** | X.509 v3 Self-Signed PKI | RFC 5280 / PKI | ✅ Approved |
+| **AES Encryption** | AES-256-GCM (Authenticated) | FIPS 197 / NIST SP 800-38D | ✅ Approved |
+| **Hybrid Encryption** | RSA-OAEP + AES-256-GCM | TLS 1.3 / HTTPS Basis | ✅ Approved |
+| **Triple DES (3DES)** | 3DES CBC (Legacy 168-bit) | NIST SP 800-67 | ⚠️ **Legacy Deprecated** (Post-2023) |
+| **One-Time Pad** | OTP XOR Cipher | Information-Theoretic Security | ℹ️ Theoretical Demo |
+
+---
+
+## 📁 Package & Directory Structure
+
+```
 nist-cryptographic-standards-suite/
-├── src/
-│   ├── app.py
-│   └── requirements.txt
+├── .github/
+│   ├── dependabot.yml              # Automated monthly dependency update scanner
+│   └── workflows/
+│       ├── ci.yml                  # Pytest runner across Python 3.10, 3.11, 3.12
+│       └── codeql.yml              # GitHub CodeQL Static Security Analysis
 ├── certs/
-├── documents/
+│   └── certificate.pem             # Exported X.509 Certificate artifact
 ├── keys/
+│   ├── rsa_private.pem             # Exported RSA Private Key artifact
+│   └── rsa_public.pem              # Exported RSA Public Key artifact
 ├── signatures/
-├── docs/
-│   ├── NIST_Security_Standards_Report.docx
-│   ├── NIST_Crypto_Output.pdf
-│   ├── REPORT.md
-│   └── terminal_output.txt
-├── .gitignore
-├── LICENSE
-└── README.md
+│   ├── message.txt                 # Original signed message
+│   └── signature.sig               # Raw signature binary artifact
+├── src/
+│   ├── app.py                      # Backward-compatible thin entry point wrapper
+│   └── nist_crypto/                # Modular Cryptographic Package
+│       ├── __init__.py             # Package metadata
+│       ├── ciphers.py              # AES-256-GCM, 3DES Legacy, OTP modules
+│       ├── cli.py                  # CLI argument parser & demonstration output
+│       ├── dh.py                   # Diffie-Hellman & HKDF key derivation
+│       ├── pki.py                  # X.509 Certificate Generator
+│       └── signatures.py           # RSA Keygen, RSA-PSS, Hybrid RSA+AES
+├── tests/
+│   └── test_nist_vectors.py        # Pytest test suite verifying KAT vectors & edge cases
+├── CODE_OF_CONDUCT.md              # Contributor Code of Conduct
+├── CONTRIBUTING.md                 # Contribution Guidelines
+├── LICENSE                         # MIT License
+├── pyproject.toml                  # Standard Python PEP 517/518 build configuration
+├── README.md                       # Documentation & Architecture Overview
+├── requirements.txt                # Production & test dependencies
+└── SECURITY.md                     # Security reporting policy
 ```
 
-## Installation Guide
-1. Ensure Python 3.x is installed.
-2. Install required dependencies:
+---
+
+## 🛡️ Security & Cryptographic Best Practices
+
+1. **Explicit Tag Verification:** AES-256-GCM mode validates authenticity tags on decryption, throwing `InvalidTag` on payload or tag tampering.
+2. **Proper Randomness:** Nonces (96-bit for GCM, IVs for 3DES) and keys are generated using system CSPRNG (`os.urandom()`).
+3. **No Private Key Logging:** Private key materials are never printed or output to unencrypted logs.
+4. **Explicit 3DES Deprecation Notice:** Triple DES is isolated in `ciphers.py` with explicit warnings documenting its deprecation per NIST SP 800-67.
+
+---
+
+## 🛠️ Installation & Execution
+
+### 1. Installation
+Clone the repository and install in editable mode:
+
 ```bash
-pip install -r src/requirements.txt
+git clone https://github.com/tahniatfarhan/nist-cryptographic-standards-suite.git
+cd nist-cryptographic-standards-suite
+pip install -e .[dev]
 ```
 
-## How to Run
-Execute the main cryptographic suite runner:
+### 2. Run Demonstrations
+
 ```bash
+# Execute all cryptographic demonstrations (Backward compatible entry point)
 python src/app.py
+
+# Or run via module CLI parser
+python -m nist_crypto.cli --demo all
 ```
 
-## Verification & Terminal Execution Output
-Execution log generated by `src/app.py` verifying all 8 cryptographic modules:
-```text
-======================================================================
-1. Diffie-Hellman Key Exchange (NIST SP 800-56A)
-======================================================================
-Alice Public Key Generated (2048-bit DH)
-Bob Public Key Generated (2048-bit DH)
-Shared Secret Derived: SUCCESS (Keys Match)
+### 3. Run Automated Pytest Suite
 
-======================================================================
-2. RSA Key Pair Generation (2048-bit / FIPS 186-4)
-======================================================================
-RSA Public/Private Keys Generated and Saved to /keys
-
-======================================================================
-3. Digital Signature (RSA-PSS & SHA-256 / FIPS 186-4)
-======================================================================
-Message Signed. Signature Verified: SUCCESS
-
-======================================================================
-4. X.509 Certificate Generation (RFC 5280)
-======================================================================
-X.509 Certificate Generated and Saved to /certs/certificate.pem
-
-======================================================================
-5. AES-256-GCM Encryption (FIPS 197 / SP 800-38D)
-======================================================================
-Plaintext: Confidential Medical Data
-Ciphertext: Tag Verified & Decrypted Successfully: PASS
+```bash
+pytest -v tests/
 ```
 
-- [NIST Cryptographic Verification Log (PDF)](docs/NIST_Crypto_Output.pdf)
-- [NIST Security Standards Full Technical Report (Word)](docs/NIST_Security_Standards_Report.docx)
-- [Terminal Output Record (Text File)](docs/terminal_output.txt)
+---
 
-## Learning Outcomes
-- Implemented real-world cryptographic primitives using industry-standard Python libraries.
-- Understood initialization vector (IV) management, Galois/Counter Mode (GCM) authentication tags, and RSA OAEP padding.
-- Serialized PKI certificates, private keys, and public keys into standard PEM and DER formats.
+## 📄 License & Author
 
-## Future Improvements
-- Extend suite to include Post-Quantum Cryptography (PQC) standards (NIST Module-Lattice-Based Kyber / Dilithium).
-- Add Command Line Interface (CLI) flags for encrypting custom user files on demand.
-- Implement REST API endpoints wrapping cryptographic operations as a microservice.
+Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for details.
 
-## License
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Author
-**Tahniat Farhan**  
-BS Cyber Security  
-University of Engineering and Technology (UET) Lahore
+**Author:** [Tahniat Farhan](https://github.com/tahniatfarhan) — BS Cyber Security, UET Lahore.
