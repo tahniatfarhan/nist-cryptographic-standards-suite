@@ -5,86 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NIST Cryptographic Standards Suite - Project Showcase</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <div class="disclaimer-banner">
+        <i class="fa-solid fa-circle-info"></i> This interactive showcase demonstrates the architecture, workflow, implementation and major features of the original project.
+    </div>
+
     <header class="hero">
         <div class="container">
-            <div class="badge-group"><span class="badge"><i class="fa-solid fa-code"></i> Python 3.12</span> <span class="badge"><i class="fa-solid fa-code"></i> PyCryptodome</span> <span class="badge"><i class="fa-solid fa-code"></i> Cryptography</span> <span class="badge"><i class="fa-solid fa-code"></i> Pytest</span></div>
+            <div class="badge-group"><span class="badge"><i class="fa-solid fa-python"></i> Python 3.12</span> <span class="badge"><i class="fa-solid fa-shield-halved"></i> PyCryptodome</span> <span class="badge"><i class="fa-solid fa-key"></i> Cryptography</span> <span class="badge"><i class="fa-solid fa-vial"></i> Pytest</span></div>
             <h1>NIST Cryptographic Standards Suite</h1>
-            <p class="tagline">Python implementation of NIST FIPS 197 AES-GCM, TDEA 3DES, RSA-2048 PKCS#1 v1.5, Diffie-Hellman, and OTP primitives.</p>
-            <div class="cta-buttons">
-                <a href="https://github.com/tahniatfarhan/nist-cryptographic-standards-suite" target="_blank" class="btn btn-primary"><i class="fa-brands fa-github"></i> View GitHub Repository</a>
-                <a href="#demo" class="btn btn-secondary"><i class="fa-solid fa-play"></i> Interactive Simulator</a>
+            <p class="hero-tagline">Educational Python implementation of NIST FIPS 197 AES-GCM, TDEA 3DES, RSA-2048 PKCS#1 v1.5, Diffie-Hellman, and OTP primitives.</p>
+            <div class="cta-group">
+                <a href="https://github.com/tahniatfarhan/nist-cryptographic-standards-suite" target="_blank" class="btn btn-primary"><i class="fa-brands fa-github"></i> View Source Code</a>
+                <a href="#demo" class="btn btn-secondary"><i class="fa-solid fa-play"></i> Explore Interactive Demo</a>
             </div>
         </div>
     </header>
 
-    <section class="tech-stack">
-        <div class="container grid-4">
-            
-            <div class="card">
-                <i class="fa-solid fa-shield-halved icon"></i>
-                <h3>AES-128/256-GCM</h3>
-                <p>Authenticated encryption with associated data (AEAD) and tag verification.</p>
-            </div>
+    <section class="container">
+        <h2 class="section-title">Key Engineering Features</h2>
+        <p class="section-subtitle">Core capabilities and technical standards demonstrated in this repository.</p>
+        <div class="grid-cards">
+        <div class="card">
+            <div class="card-icon"><i class="fa-solid fa-lock"></i></div>
+            <h3>AES-256-GCM AEAD</h3>
+            <p>Authenticated encryption with associated data and tag verification.</p>
+        </div>
     
-            <div class="card">
-                <i class="fa-solid fa-key icon"></i>
-                <h3>RSA-2048 & PKI</h3>
-                <p>Digital signatures, SHA-256 digest hashing, and X.509 cert generation.</p>
-            </div>
+        <div class="card">
+            <div class="card-icon"><i class="fa-solid fa-key"></i></div>
+            <h3>RSA-2048 PKI</h3>
+            <p>Digital signatures, SHA-256 hashing, and X.509 certificate generation.</p>
+        </div>
     
-            <div class="card">
-                <i class="fa-solid fa-network-wired icon"></i>
-                <h3>Diffie-Hellman</h3>
-                <p>Secure key exchange over finite fields with HKDF derivation.</p>
+        <div class="card">
+            <div class="card-icon"><i class="fa-solid fa-network-wired"></i></div>
+            <h3>Diffie-Hellman</h3>
+            <p>Secure key exchange over finite fields with HKDF derivation.</p>
+        </div>
+    </div>
+    </section>
+
+    <section class="container">
+        <h2 class="section-title">System Architecture</h2>
+        <p class="section-subtitle">Structural component workflow and module dependencies.</p>
+        <svg class="svg-diagram" viewBox="0 0 800 200">
+    <rect x="30" y="50" width="180" height="90" rx="8" fill="#131c2e" stroke="#38bdf8" stroke-width="2"/>
+    <text x="120" y="90" fill="#fff" font-weight="bold" text-anchor="middle">Plaintext / Key</text>
+    <text x="120" y="115" fill="#94a3b8" font-size="12" text-anchor="middle">FIPS 197 Standard</text>
+
+    <line x1="210" y1="95" x2="300" y2="95" stroke="#38bdf8" stroke-width="2"/>
+
+    <rect x="300" y="50" width="200" height="90" rx="8" fill="#131c2e" stroke="#4ade80" stroke-width="2"/>
+    <text x="400" y="90" fill="#fff" font-weight="bold" text-anchor="middle">AES-256-GCM Engine</text>
+    <text x="400" y="115" fill="#94a3b8" font-size="12" text-anchor="middle">96-bit IV & AEAD Tag</text>
+
+    <line x1="500" y1="95" x2="590" y2="95" stroke="#4ade80" stroke-width="2"/>
+
+    <rect x="590" y="50" width="180" height="90" rx="8" fill="#131c2e" stroke="#c084fc" stroke-width="2"/>
+    <text x="680" y="90" fill="#fff" font-weight="bold" text-anchor="middle">Ciphertext + Tag</text>
+    <text x="680" y="115" fill="#94a3b8" font-size="12" text-anchor="middle">Authenticated Stream</text>
+</svg>
+    </section>
+
+    <section id="demo" class="container">
+        <h2 class="section-title">Interactive Project Simulator</h2>
+        <p class="section-subtitle">Test and explore the system algorithms and workflows directly in your browser.</p>
+        <div class="demo-window">
+            <div class="demo-header">
+                <div class="window-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+                <div class="demo-title">nist-cryptographic-standards-suite — Interactive Workbench</div>
             </div>
-    
-            <div class="card">
-                <i class="fa-solid fa-lock icon"></i>
-                <h3>One-Time Pad</h3>
-                <p>Information-theoretically secure stream cipher demonstration.</p>
-            </div>
-    
+            <div class="demo-body">
+<div class="control-row">
+    <input type="text" id="cryptoMsg" value="Top Secret Transaction Payload" style="flex: 1;">
+    <button class="btn btn-primary" onclick="runAES()">Execute AES-256-GCM</button>
+    <button class="btn btn-secondary" onclick="runRSA()">Execute RSA-2048 Sign</button>
+</div>
+<div id="cryptoOut" class="terminal-output">$ Click button to execute NIST cryptographic primitives...</div>
+</div>
         </div>
     </section>
 
-    <section id="demo" class="demo-section">
-        <div class="container">
-            <h2 class="section-title"><i class="fa-solid fa-terminal"></i> Interactive Cryptographic Terminal</h2>
-            <p class="section-desc">Experience the application features and execution flow interactively below.</p>
-
-            <div class="window-frame">
-                <div class="window-header">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                    <span class="window-title">nist-cryptographic-standards-suite — Terminal & Visualizer</span>
-                </div>
-                <div class="window-body" id="demoBody">
-                    <!-- Loaded dynamically via script.js -->
-                </div>
+    <section class="container">
+        <details class="engineering-drawer">
+            <summary><i class="fa-solid fa-terminal"></i> Engineering Setup & Build Steps</summary>
+            <div class="drawer-content">
+                <pre><code>pip install -r requirements.txt
+python -m pytest -v tests/</code></pre>
             </div>
-        </div>
-    </section>
-
-    <section class="installation">
-        <div class="container">
-            <h2 class="section-title"><i class="fa-solid fa-terminal"></i> Quick Execution & Test Commands</h2>
-            <pre><code># Clone repository
-git clone https://github.com/tahniatfarhan/nist-cryptographic-standards-suite.git
-cd nist-cryptographic-standards-suite
-
-# View project structure & run test suite
-# (See README.md for full execution details)</code></pre>
-        </div>
+        </details>
     </section>
 
     <footer>
         <div class="container">
-            <p>© 2026 Tahniat Farhan — BS Cyber Security, UET Lahore | Distributed under MIT License</p>
+            <p>© 2026 Tahniat Farhan — BS Cyber Security, UET Lahore | MIT License</p>
         </div>
     </footer>
 
